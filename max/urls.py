@@ -15,6 +15,7 @@ urlpatterns = [
 	path('login/', views.login),
 	path('logout/', views.logout),
 	path('register/', views.register),
+	path('confirm/', views.user_confirm),
 	path('captcha/', include('captcha.urls')),
 
 	path("api/auth/", include("rest_framework.urls", namespace="rest_framework")),
