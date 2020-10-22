@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'captcha',# 字符验证码
 
     'news.apps.NewsConfig',
-    'user.apps.UserConfig'
+    'user.apps.UserConfig',
+    'contests.apps.ContestsConfig'
 ]
 
 # 全局分页配置

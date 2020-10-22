@@ -14,6 +14,7 @@ def index(request):
 
 # locals返回本地的所有变量字典，不用再编写数据字典，重新递交也不会丢失除密码以外的信息，但会递交全部变量引起冗余
 # session会话你完全可以往里面写任何数据，不仅仅限于用户相关！
+# get方法关联表单建立样式
 def login(request):
 	if request.session.get('is_login', None):# 不允许重复登录
 		return redirect('/index/')
