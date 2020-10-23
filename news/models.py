@@ -7,7 +7,6 @@ class News(models.Model):
     text = models.TextField('正文')
     views = models.PositiveIntegerField('浏览量', default=0)
     released_time = models.DateTimeField('发布时间', blank=False, null=False, default=now)
-    link = models.URLField('文章链接', blank=True)
     cover_url = models.URLField('封面链接', blank=True)
     def __str__(self):
         return self.title

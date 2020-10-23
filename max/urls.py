@@ -10,6 +10,7 @@ urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('api/', include(router.urls)),
 	path('', include('news.urls')),
+	path('', include('contests.urls')),
 
 	path('index/', views.index),
 	path('login/', views.login),
