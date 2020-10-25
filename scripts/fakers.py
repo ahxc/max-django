@@ -1,7 +1,5 @@
 import os, random, sys, django
 from faker import Faker
-from datetime import timedelta
-from django.utils import timezone
 
 
 back = os.path.dirname
@@ -14,21 +12,6 @@ if __name__ == '__main__':
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "max.settings")
     django.setup()
     fake = Faker('zh_CN')
-
-
-    from news.models import News
-    print('清空数据库News对象')
-    News.objects.all().delete()
-    url_path = os.path.join(url_file_path, 'news.txt')
-    f = open(url_path, encoding='utf-8')
-    for line in f.readlines():
-        news = News.objects.create(
-            title = fake.sentence().strip('.'),
-            text = '\n\n'.join(fake.paragraphs(10)),
-            views = random.randint(0, 100000),
-            cover_url = line)
-        news.save()
-    print('News对象数据创建完成')
 
 
     from contests.models import Team
@@ -62,23 +45,33 @@ if __name__ == '__main__':
     from contests.models import Game
     print('清空数据库Contests对象')
     Game.objects.all().delete()
-    for i in range(0, 5):
+    for i in range(0, team_lenth*5):
+        r_index = random.randint(0, team_lenth-1)
+        if r_index == 0 or r_index == team_lenth-1:
+            b_index = random.randint(1, team_lenth-2)
+        else:
+            l1 = list(range(0,r_index))
+            l2 = list(range(r_index+1, team_lenth))
+            l1.extend(l2)
+            b_index = random.choice(l1)
         game = Game.objects.create(
             is_end=fake.boolean(chance_of_getting_true=50),
-            choices=random.randint(0, 2),
+            game_status=random.randint(0, 2),
             contests=Contests.objects.all()[random.randint(0, contests_lenth-1)],
-            r_team=Team.objects.all()[random.randint(0, team_lenth-1)],
-            b_team=Team.objects.all()[random.randint(0, team_lenth-1)])
+            r_team=Team.objects.all()[r_index],
+            b_team=Team.objects.all()[b_index])
         game.save()
     print('Team对象数据创建完成')
 
 
     from user.models import User
+    user_length = 0
     print('清空数据库User对象')
     User.objects.all().delete()
     url_path = os.path.join(url_file_path, 'user.txt')
     f = open(url_path, encoding='utf-8')
     for line in f.readlines():
+        user_length += 1
         user = User.objects.create(
             name=fake.ean13(),
             password=fake.password(length=random.randint(8, 25)),
@@ -90,3 +83,20 @@ if __name__ == '__main__':
             team=Team.objects.all()[random.randint(0, team_lenth-1)])
         user.save()
     print('User对象数据创建完成')
+
+
+    from news.models import News
+    print('清空数据库News对象')
+    News.objects.all().delete()
+    url_path = os.path.join(url_file_path, 'news.txt')
+    f = open(url_path, encoding='utf-8')
+    for line in f.readlines():
+        news = News.objects.create(
+            author = User.objects.all()[random.randint(0, user_length-1)],
+            title = fake.sentence().strip('.'),
+            text = '\n\n'.join(fake.paragraphs(random.randint(10, 40))),
+            views = random.randint(0, 100000),
+            cover_url = line,
+            released_time=fake.date_time_this_year(before_now=True, after_now=False, tzinfo=None))
+        news.save()
+    print('News对象数据创建完成')

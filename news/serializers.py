@@ -1,4 +1,6 @@
 from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializer
+from rest_framework import serializers
+
 
 from .models import News
 from scripts.utils import TimestampField
@@ -19,6 +21,8 @@ class NewsSerializer(HyperlinkedModelSerializer):
 
 class DetailSerializer(ModelSerializer):
     released_timestamp = TimestampField(source='released_time')
+    author_nickname = serializers.CharField(source='author.nickname')
+    author_portrait = serializers.URLField(source='author.portrait')
     class Meta:
         model = News
         fields = [
@@ -26,5 +30,7 @@ class DetailSerializer(ModelSerializer):
             "title",
             "text",
             "released_timestamp",
-            "cover_url"
+            "cover_url",
+            "author_nickname",
+            "author_portrait"
         ]

@@ -2,7 +2,11 @@ from django.db import models
 from django.utils.timezone import now
 
 
+from user.models import User
+
+
 class News(models.Model):
+    author = models.ForeignKey(User, verbose_name='作者', blank=False, on_delete=models.CASCADE)
     title = models.CharField('标题', max_length=100)
     text = models.TextField('正文')
     views = models.PositiveIntegerField('浏览量', default=0)
@@ -13,6 +17,6 @@ class News(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
     class Meta:
-        ordering = ["title"]
+        ordering = ["-released_time"]
         verbose_name = '新闻'
         verbose_name_plural = '新闻对象'

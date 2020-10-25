@@ -12,7 +12,7 @@ class User(models.Model):
     password = models.CharField('密码', max_length=256)
     nickname = models.CharField('昵称', max_length=16, blank=False, default=name)
     email = models.EmailField('邮箱', unique=True)
-    sex = models.SmallIntegerField('性别', max_length=32, choices=gender, default="男")
+    sex = models.SmallIntegerField('性别', choices=gender, default="男")
     c_time = models.DateTimeField(auto_now_add=True)
     is_activated = models.BooleanField(default=False)
     portrait = models.URLField('用户头像', blank=True)
