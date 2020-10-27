@@ -1,7 +1,9 @@
 from django.contrib import admin
 
-from . import models
 
-admin.site.register(models.Team)
-admin.site.register(models.Contests)
-admin.site.register(models.Game)
+from .models import *
+
+
+l = [Team, Contests, Game, Commentary]
+for i in l:
+    admin.site.register(i)

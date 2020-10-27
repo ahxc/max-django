@@ -37,9 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'rest_framework',
+    'rest_framework',#drf
     'corsheaders',# 跨域设置
     'captcha',# 字符验证码
+    'django_filters',# 过滤器
 
     'news.apps.NewsConfig',
     'user.apps.UserConfig',

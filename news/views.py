@@ -7,14 +7,15 @@ from .serializers import NewsSerializer, DetailSerializer
 from scripts.utils import ListPagination
 
 
-class FindNews(mixins.ListModelMixin, viewsets.GenericViewSet):
-    serializer_class = NewsSerializer# 序列化类
-    queryset = News.objects.all()# 数据库查询结果集
-    pagenation_class = ListPagination
-news_view = FindNews.as_view({'get': 'list'})
-
-
-class NewsDetail(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    serializer_class = DetailSerializer
+# 列表、单例和基础视图集，动态化序列化器
+class FindNews(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     queryset = News.objects.all()
-item_view = NewsDetail.as_view({'get': 'retrieve'})
+    pagenation_class = ListPagination
+    serializer_class_table = {
+        'list': NewsSerializer,
+        'retrieve': DetailSerializer
+    }
+    def get_serializer_class(self):
+        return self.serializer_class_table.get(self.action, NewsSerializer)
+item_view = FindNews.as_view({'get': 'retrieve'})
+news_view = FindNews.as_view({'get': 'list'})

@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from rest_framework import mixins, viewsets
 from scripts.utils import ListPagination
+from django_filters.rest_framework import DjangoFilterBackend
 
 
-from .serializers import GameSerializer
-from .models import Game
+from .serializers import GameSerializer, CommentarySerializer
+from .models import Game, Commentary
 from scripts.utils import ListPagination
+from . import filters
 
 
 class GameList(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -13,3 +15,10 @@ class GameList(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Game.objects.all()
     pagenation_class = ListPagination
 gamelist_view = GameList.as_view({'get': 'list'})
+
+
+class CommentaryList(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = CommentarySerializer
+    queryset = Commentary.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = filters
