@@ -72,7 +72,7 @@ if __name__ == '__main__':
     for i in range(0, game_length*5):
         commentary = Commentary.objects.create(
             time=fake.date_time_this_year(before_now=True, after_now=False, tzinfo=None),
-            story=fake.text(max_nb_chars=random.randint(100, 200)),
+            story=fake.paragraph(nb_sentences=random.randint(1, 3), variable_nb_sentences=True),
             game=Game.objects.all()[random.randint(0, game_length-1)])
         commentary.save()
     print('Commentary对象数据创建完成')
