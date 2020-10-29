@@ -51,7 +51,7 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',# 分页，LimitOffsetPagination 分页风格
     'PAGE_SIZE': 10,# 每页多少条记录
-    'DEFAULT_FILTER_BACKENDS': 'django_filters.rest_framework.DjangoFilterBackend',# 过滤器配置
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),# 过滤器配置，元组
 }
 
 MIDDLEWARE = [

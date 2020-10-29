@@ -9,7 +9,7 @@ class Commentary(models.Model):
     def __str__(self):
         return self.story[:10]
     class Meta:
-        ordering = ["-time"]
+        ordering = ["time"]
         verbose_name = '赛点'
         verbose_name_plural = '赛点对象'
 

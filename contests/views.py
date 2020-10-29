@@ -18,6 +18,7 @@ gamelist_view = GameList.as_view({'get': 'list'})
 
 
 class CommentaryList(mixins.ListModelMixin, viewsets.GenericViewSet):
+    pagenation_class = ListPagination
     serializer_class = CommentarySerializer
     queryset = Commentary.objects.all()
     filter_backends = [DjangoFilterBackend]

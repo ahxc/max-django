@@ -9,11 +9,12 @@ from scripts.utils import TimestampField
 
 
 class CommentarySerializer(serializers.ModelSerializer):
+    timestamp = TimestampField(source='time')
     class Meta:
         model = Commentary
         fields = [
             "id",
-            'time',
+            'timestamp',
             'story'
         ]
 
@@ -38,11 +39,12 @@ class GameSerializer(serializers.ModelSerializer):
         model = Game
         fields = [
             'id',
+            'is_end',
+            'game_status',
             'end_time_timestamp',
             'start_time_timestamp',
-            'r_team',
-            'b_team',
+
             'contests_name',
-            'game_status',
-            'is_end'
+            'r_team',
+            'b_team'
         ]
