@@ -18,7 +18,7 @@ class User(models.Model):
     portrait = models.URLField('用户头像', blank=True)
     team = models.ForeignKey(Team, verbose_name='隶属队伍', blank=True, null=True, on_delete=models.SET_NULL)
     def __str__(self):
-        return self.name
+        return str(self.pk)+': '+self.name
     class Meta:
         ordering = ["-c_time"]
         verbose_name = "用户"

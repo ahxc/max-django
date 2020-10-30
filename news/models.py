@@ -13,9 +13,7 @@ class News(models.Model):
     released_time = models.DateTimeField('发布时间', blank=False, null=False, default=now)
     cover_url = models.URLField('封面链接', blank=True)
     def __str__(self):
-        return self.title
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
+        return str(self.pk)+': '+self.title
     class Meta:
         ordering = ["-released_time"]
         verbose_name = '新闻'
