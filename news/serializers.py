@@ -18,7 +18,7 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 
 class NewsSerializer(ModelSerializer):
-    released_timestamp = TimestampField(source='released_time')
+    released_timestamp = TimestampField(source='modified_time')
     author = AuthorSerializer()
     class Meta:
         model = News

@@ -44,7 +44,8 @@ INSTALLED_APPS = [
 
     'news.apps.NewsConfig',
     'user.apps.UserConfig',
-    'contests.apps.ContestsConfig'
+    'contests.apps.ContestsConfig',
+    'post.apps.PostConfig'
 ]
 
 # 全局配置

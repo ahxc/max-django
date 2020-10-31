@@ -9,7 +9,6 @@ from rest_framework.pagination import PageNumberPagination
 
 
 from user import models
-from max.settings import TIME_ZONE
 
 
 # sha256算法
@@ -45,13 +44,7 @@ def send_email(email, code):
 # 时间转时间戳类
 class TimestampField(Field):
     def to_representation(self, value):
-        return value.timestamp()
-
-    def to_internal_value(self, data):
-        timestamp = float(data)
-        no_tz = datetime.utcfromtimestamp(timestamp)
-        # 不引入时区会告警
-        return no_tz.astimezone(timezone(TIME_ZONE))
+        return int(value.timestamp())
 
 
 # 分页定制类

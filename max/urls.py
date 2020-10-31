@@ -11,6 +11,7 @@ urlpatterns = [
 	path('api/', include(router.urls)),
 	path('', include('news.urls')),
 	path('', include('contests.urls')),
+	path('', include('post.urls')),
 
 	path('index/', views.index),
 	path('login/', views.login),

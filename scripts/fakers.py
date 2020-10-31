@@ -106,11 +106,39 @@ if __name__ == '__main__':
     f = open(url_path, encoding='utf-8')
     for line in f.readlines():
         news = News.objects.create(
-            author = User.objects.all()[random.randint(0, user_length-1)],
-            title = fake.sentence().strip('.'),
-            text = fake.text(random.randint(500, 1000)),
-            views = random.randint(0, 100000),
-            cover_url = line.strip('\n'),
-            released_time=fake.date_time_this_year(before_now=True, after_now=False, tzinfo=None))
+            author=User.objects.all()[random.randint(0, user_length-1)],
+            title=fake.sentence().strip('.'),
+            text=fake.text(random.randint(500, 1000)),
+            views=random.randint(0, 100000),
+            cover_url=line.strip('\n'))
         news.save()
     print('News对象数据创建完成')
+
+
+    from post.models import Category
+    print('清空数据库Category对象...')
+    Category.objects.all().delete()
+    category_list = ['RPG', 'roll宝祈福', 'DOTA综合', '饰品交易']
+    category_length = len(category_list)
+    for line in category_list:
+        category = Category.objects.create(
+            name=line
+        )
+        category.save()
+    print('Category对象数据创建完成')
+
+
+    from post.models import Post
+    print('清空数据库Post对象...')
+    Post.objects.all().delete()
+    for line in range(0, user_length*5):
+        post = Post.objects.create(
+            author=User.objects.all()[random.randint(0, user_length-1)],
+            category=Category.objects.all()[random.randint(0, category_length-1)],
+            title=fake.sentence().strip('.'),
+            text=fake.text(random.randint(500, 1000)),
+            views=random.randint(0, 100000),
+            likes=random.randint(0, 100000)
+        )
+        post.save()
+    print('Post对象数据创建完成')

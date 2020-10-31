@@ -7,7 +7,7 @@ back = os.path.dirname
 roots = back(back(os.path.abspath(__file__)))
 
 
-l = ['contests', 'news', 'user']
+l = ['contests', 'news', 'user', 'post']
 
 
 p1 = os.path.join(roots, 'db.sqlite3')

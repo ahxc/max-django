@@ -1,4 +1,3 @@
-from rest_framework.pagination import PageNumberPagination
 from rest_framework import mixins, viewsets
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -16,14 +15,4 @@ class FindNews(mixins.ListModelMixin, viewsets.GenericViewSet):
     pagenation_class = ListPagination
     filter_backends = [DjangoFilterBackend]
     filterset_class = NewsFilter
-# item_view = FindNews.as_view({'get': 'retrieve'})
 news_view = FindNews.as_view({'get': 'list'})
-
-"""
-serializer_class_table = {
-        'list': NewsSerializer,
-        'retrieve': DetailSerializer
-    }
-    def get_serializer_class(self):
-        return self.serializer_class_table.get(self.action, NewsSerializer)
-"""

@@ -1,6 +1,9 @@
 from django.contrib import admin
 
-from . import models
 
-admin.site.register(models.User)
-admin.site.register(models.ConfirmString)
+from .models import *
+
+
+l = [User]
+for i in l:
+    admin.site.register(i)
