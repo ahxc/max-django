@@ -118,12 +118,24 @@ if __name__ == '__main__':
     from post.models import Category
     print('清空数据库Category对象...')
     Category.objects.all().delete()
-    category_list = ['RPG', 'roll宝祈福', 'DOTA综合', '饰品交易']
-    category_length = len(category_list)
-    for line in category_list:
+    url_path = os.path.join(url_file_path, 'category_icon.txt')
+    f = open(url_path, encoding='utf-8')
+    main_category = ['父类1', '父类2', '父类3', '父类4']
+    p_length = len(main_category)
+    c_length = 0
+    for line in main_category:
         category = Category.objects.create(
-            name=line
-        )
+            name=line,
+            is_parents=True)
+        category.save()
+    for line in f.readlines():
+        c_length += 1
+        category = Category.objects.create(
+            name=str(random.randint(1000,9999))+fake.company(),
+            category_icon=line.strip('\n'),
+            is_parents=False,
+            parents_category=Category.objects.filter(is_parents=True)[random.randint(0, p_length-1)],
+            describe=fake.sentence().strip('.'))
         category.save()
     print('Category对象数据创建完成')
 
@@ -134,7 +146,7 @@ if __name__ == '__main__':
     for line in range(0, user_length*5):
         post = Post.objects.create(
             author=User.objects.all()[random.randint(0, user_length-1)],
-            category=Category.objects.all()[random.randint(0, category_length-1)],
+            category=Category.objects.filter(is_parents=False)[random.randint(0, c_length-1)],
             title=fake.sentence().strip('.'),
             text=fake.text(random.randint(500, 1000)),
             views=random.randint(0, 100000),

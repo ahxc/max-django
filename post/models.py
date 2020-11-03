@@ -6,9 +6,16 @@ from user.models import User
 
 
 class Category(models.Model):
-    name = models.CharField('分类', max_length=30, unique=True)
+    name = models.CharField(verbose_name='分类', max_length=30, unique=True)
+    category_icon = models.URLField(verbose_name='分类图标', blank=True)
+    parents_category = models.ForeignKey('self', verbose_name='父类', blank=True, null=True, on_delete=models.CASCADE)
+    is_parents = models.BooleanField(verbose_name='是否父级分类', default=False, blank=False)
+    describe = models.CharField(verbose_name='描述', max_length=40, blank=True, null=True)
     def __str__(self):
-        return str(self.pk)+': '+self.name
+        if self.parents_category == None and self.is_parents:
+            return str(self.pk)+': '+self.name
+        else:
+            return str(self.pk)+': '+self.name+'({})'.format(self.parents_category.name)
     class Meta:
         ordering = ['pk']
         verbose_name = '分类'

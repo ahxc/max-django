@@ -4,7 +4,7 @@ from contests.models import Team
 
 
 # django默认会以模型的小写加上_set作为反向关联名：team.user_set
-# 自定义可在related_name中设置，关闭反向关联使用'+'或者名称后加'+'
+# 自定义可在字段参数related_name中设置，关闭反向关联使用'+'或者名称后加'+'
 # auto_now_add后台将不可编辑
 class User(models.Model):
     gender = ((1, "男"), (0, "女"),)

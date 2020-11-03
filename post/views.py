@@ -2,20 +2,27 @@ from rest_framework import mixins, viewsets
 from django_filters.rest_framework import DjangoFilterBackend
 
 
-from .models import Post
-from .serializers import PostSerializer
+from .models import Post, Category
+from .serializers import PostSerializer, CategorySerializer
 from .filters import PostFilter
-from scripts.utils import ListPagination
+from scripts.utils import ListPagination, allPagination
 
 
 # 列表、单例和基础视图集，动态化序列化器
 class PostView(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
-    pagenation_class = ListPagination
+    pagination_class = ListPagination
     filter_backends = [DjangoFilterBackend]
     filterset_class = PostFilter
 post_view = PostView.as_view({'get': 'list'})
+
+
+class CategoryView(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+    pagination_class = allPagination
+category_view = CategoryView.as_view({'get': 'list'})
 
 
 """

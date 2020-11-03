@@ -2,7 +2,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 
 
-from .models import Post
+from .models import Post, Category
 from user.models import User
 from scripts.utils import TimestampField
 
@@ -17,9 +17,22 @@ class AuthorSerializer(serializers.ModelSerializer):
         ]
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = [
+            'id',
+            'name',
+            'category_icon',
+            'is_parents',
+            'parents_category',
+            'describe',
+        ]
+
+
 class PostSerializer(ModelSerializer):
     modified_time_timestamp = TimestampField(source='modified_time')
-    category_ = serializers.CharField(source='category')
+    category = CategorySerializer()
     author = AuthorSerializer()
     class Meta:
         model = Post
@@ -31,6 +44,6 @@ class PostSerializer(ModelSerializer):
             'likes',
             'modified_time_timestamp',
 
-            'category_',
+            'category',
             'author'
         ]

@@ -1,12 +1,13 @@
 from django.urls import path
 
 
-from . import views
+from .views import *
 
 
-app_name = 'news'
+app_name = 'post'
 
 
 urlpatterns = [
-    path('api/community/post', views.post_view),
+    path('api/community/post', post_view),
+    path('api/community/category', category_view)
 ]
