@@ -4,7 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Post, Category
 from .serializers import PostSerializer, CategorySerializer
-from .filters import PostFilter
+from .filters import PostFilter, CategoryFilter
 from scripts.utils import ListPagination, allPagination
 
 
@@ -21,7 +21,9 @@ post_view = PostView.as_view({'get': 'list'})
 class CategoryView(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
-    pagination_class = allPagination
+    pagination_class = allPagination# 大分页，单页
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = CategoryFilter
 category_view = CategoryView.as_view({'get': 'list'})
 
 

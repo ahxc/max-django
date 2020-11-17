@@ -7,4 +7,10 @@ from .models import Post, Category
 class PostFilter(drf_filters.FilterSet):
     class Meta:
         model = Post
+        fields = ['id', 'category']
+
+
+class CategoryFilter(drf_filters.FilterSet):
+    class Meta:
+        model = Category
         fields = ['id']
